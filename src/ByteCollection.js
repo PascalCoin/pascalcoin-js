@@ -55,7 +55,7 @@ class ByteCollection {
      * @returns {ByteCollection}
      */
   static fromInt(int, nBytes = null) {
-    const instance = ByteCollection.fromHex(int.toString(16));
+    const instance = ByteCollection.fromHex(parseInt(int, 10).toString(16));
 
     if (nBytes !== null && instance.length < nBytes) {
       return instance.prepend(ByteCollection.fromHex('00'.repeat(nBytes - instance.length)));
