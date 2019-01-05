@@ -43,6 +43,7 @@ class PagedAction extends BaseAction {
   async executeAll() {
     const all = [];
     let result = [];
+
     do {
       result = await this.execute();
       result.forEach(item => all.push(item));
@@ -62,6 +63,7 @@ class PagedAction extends BaseAction {
   async executeAllTransformArray(DestinationType) {
     const all = [];
     let result = [];
+
     do {
       result = await this.executeTransformArray(DestinationType);
       result.forEach(item => all.push(item));

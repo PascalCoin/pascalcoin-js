@@ -22,6 +22,7 @@ const WalletPublicKey = require('./../Types/WalletPublicKey');
  */
 function transformRpcParams(params) {
   const newParams = {};
+
   Object.keys(params).forEach((field) => {
     const item = params[field];
 
@@ -124,6 +125,7 @@ class Executor {
   async executeAll(action, transformCallback = r => r) {
     const all = [];
     let result = [];
+
     do {
       result = await this.execute(action.method, action.params, transformCallback);
       result.forEach(item => all.push(item));

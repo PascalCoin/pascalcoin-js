@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Abstract = require('./../Abstract');
 
 const P_BRECEIVED = Symbol('breceived');
@@ -122,6 +121,5 @@ class NetStats extends Abstract {
     return this[P_TCLIENTS];
   }
 }
-
 
 module.exports = NetStats;

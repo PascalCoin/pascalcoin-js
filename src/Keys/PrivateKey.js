@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const ByteCollection = require('./../ByteCollection');
 const Curve = require('./Curve');
 const AES = require('./../Crypto/AES');
@@ -74,6 +73,7 @@ class PrivateKey {
   encode() {
     const curve = ByteCollection.fromInt(this.curve.id).switchEndian();
     const length = ByteCollection.fromInt(this.length, 2).switchEndian();
+
     return ByteCollection.concat(curve, length, this.key);
   }
 
@@ -87,6 +87,7 @@ class PrivateKey {
     const curve = encoded.slice(0, 2).switchEndian().toInt();
     const length = encoded.slice(2, 4).switchEndian().toInt();
     const key = encoded.slice(4, 4 + length);
+
     return new PrivateKey(key, new Curve(curve));
   }
 
@@ -113,6 +114,7 @@ class PrivateKey {
     // eslint-disable-next-line no-param-reassign
     encrypted = ByteCollection.fromHex(encrypted);
     const decrypted = AES.decrypt(encrypted.buffer, Buffer.from(password));
+
     if (decrypted === false) {
       return false;
     }

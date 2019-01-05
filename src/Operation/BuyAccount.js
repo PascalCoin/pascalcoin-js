@@ -60,7 +60,7 @@ class BuyAccount extends Abstract {
       this.bcFromInt(this.fee.toMolina(), 8),
       this.payload,
       ByteCollection.fromInt(0, 2),
-      ByteCollection.fromInt(Transaction.OPTYPE),
+      ByteCollection.fromInt(BuyAccount.OPTYPE),
     );
   }
 
@@ -71,7 +71,7 @@ class BuyAccount extends Abstract {
      */
   toRaw() {
     return ByteCollection.concat(
-      this.bcFromInt(Transaction.OPTYPE, 4),
+      this.bcFromInt(BuyAccount.OPTYPE, 4),
       this.bcFromInt(this[P_SENDER].account, 4),
       this.bcFromInt(this.nOperation, 4),
       this.bcFromInt(this[P_TARGET].account, 4),
@@ -84,4 +84,4 @@ class BuyAccount extends Abstract {
   }
 }
 
-module.exports = Transaction;
+module.exports = BuyAccount;

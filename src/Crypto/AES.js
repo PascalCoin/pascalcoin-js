@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const forge = require('node-forge');
 const Hashing = require('./Hashing');
 
@@ -54,7 +53,7 @@ class AES {
     );
 
     cipher.start({
-      iv: forge.util.createBuffer(iv.toString('binary')),
+      iv: forge.util.createBuffer(iv.toString('binary'))
     });
     cipher.update(forge.util.createBuffer(data.toString('binary')));
     cipher.finish();
@@ -78,6 +77,7 @@ class AES {
     const iv = getIV(key, password, salt);
 
     const decipher = forge.cipher.createDecipher('AES-CBC', forge.util.createBuffer(key.toString('binary')));
+
     decipher.start({ iv: forge.util.createBuffer(iv.toString('binary')) });
     decipher.update(forge.util.createBuffer(rest.toString('binary')));
     if (!decipher.finish()) {

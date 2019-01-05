@@ -11,6 +11,7 @@ const ChangeAccountInfo = require('./Operation/ChangeAccountInfo');
  * A simple to use wrapper for all functionality related to
  */
 class Wallet {
+
   constructor(rpcHostAddress) {
     this.rpc = RPC.factory(rpcHostAddress);
   }
@@ -23,6 +24,7 @@ class Wallet {
      */
   identify(ident, password) {
     const pkDecrypted = PrivateKey.decrypt(password, ident);
+
     if (pkDecrypted === false) {
       return false;
     }
@@ -64,6 +66,7 @@ class Wallet {
       this.rpc.getaccount(sender).then((senderAccount) => {
         const opBuilder = new OperationsBuilder();
         const op = new Transaction(sender, target, amount);
+
         op.withPayload(payload);
         op.sign(this.keyPair, senderAccount.nOperation + 1);
         opBuilder.addOperation(op);
@@ -79,6 +82,7 @@ class Wallet {
       this.rpc.getaccount(target).then((targetAccount) => {
         const opBuilder = new OperationsBuilder();
         const op = new ChangeAccountInfo(signer, target);
+
         op.withPayload(payload);
         if (newName !== null) {
           op.withNewName(newName);
@@ -105,6 +109,7 @@ class Wallet {
      */
   getKeys() {
     let keys = localStorage.getItem('keys');
+
     if (keys === null) {
       keys = [];
       localStorage.setItem('keys', JSON.stringify(keys));
@@ -128,7 +133,7 @@ class Wallet {
       enc: encPrivateKey,
       acc: Array.isArray(accountNumbers) ? accountNumbers.slice(0, 5) : [],
       name,
-      ct: accountNumbers.length,
+      ct: accountNumbers.length
     };
 
     if (idx === -1) {

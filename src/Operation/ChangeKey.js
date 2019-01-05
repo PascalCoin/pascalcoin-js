@@ -1,8 +1,6 @@
 const Abstract = require('./Abstract');
-
 const ByteCollection = require('./../ByteCollection');
 const PublicKey = require('./../Keys/PublicKey');
-
 const AccountNumber = require('./../Types/AccountNumber');
 
 const P_ACCOUNT_SIGNER = Symbol('account_signer');
@@ -42,6 +40,7 @@ class ChangeKey extends Abstract {
      */
   digest() {
     let bc = this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4);
+
     if (!this[P_ACCOUNT_SIGNER].equals(this[P_ACCOUNT_TARGET])) {
       bc = bc.append(this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4));
     }

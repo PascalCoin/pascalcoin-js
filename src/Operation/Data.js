@@ -1,7 +1,4 @@
 const Abstract = require('./Abstract');
-
-const ByteCollection = require('./../ByteCollection');
-const PublicKey = require('./../Keys/PublicKey');
 const AccountNumber = require('./../Types/AccountNumber');
 
 const P_ACCOUNT_SIGNER = Symbol('account_signer');
@@ -40,18 +37,7 @@ class Data extends Abstract {
      * @returns {ByteCollection}
      */
   digest() {
-    let bc = this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4);
-    if (!this[P_ACCOUNT_SIGNER].equals(this[P_ACCOUNT_TARGET])) {
-      bc = bc.append(this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4));
-    }
-    return ByteCollection.concat(
-      this.bcFromInt(this.nOperation, 4),
-      this.bcFromInt(this.fee.toMolina(), 8),
-      this.payload,
-      PublicKey.empty().encode(), // v2
-      this[P_NEW_PUBLIC_KEY].encode(),
-      this.bcFromInt(ChangeKey.OPTYPE),
-    );
+    throw new Error('Not implemented');
   }
 
   /**
@@ -60,7 +46,7 @@ class Data extends Abstract {
      * @returns {ByteCollection}
      */
   toRaw() {
-    throw 'todo';
+    throw new Error('todo');
   }
 }
 

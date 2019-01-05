@@ -22,6 +22,7 @@ const P_WITH_NEW_TYPE = Symbol('with_new_type');
  */
 function getChangeType(op) {
   let changeType = 0;
+
   if (op[P_WITH_NEW_PUBKEY] === true) {
     changeType |= 1;
   }

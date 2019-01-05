@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const P_INITIALIZATION_DATA = Symbol('__initialization_data');
 
 /**

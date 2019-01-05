@@ -25,9 +25,10 @@ class Caller {
         method: 'POST',
         body: request,
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       };
+
       return fetch(host, options)
         .then(res => res.text())
         .then((text) => {

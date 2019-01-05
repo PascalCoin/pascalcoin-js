@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Hashing = require('./../Crypto/Hashing');
 const BinToText = require('./../Crypto/BinToText');
 const ByteCollection = require('./../ByteCollection');
@@ -90,6 +89,7 @@ class PublicKey {
     const curve = ByteCollection.fromInt(this.curve.id, 2).switchEndian();
     const xl = ByteCollection.fromInt(this.xl, 2).switchEndian();
     const yl = ByteCollection.fromInt(this.yl, 2).switchEndian();
+
     return ByteCollection.concat(curve, xl, this.x, yl, this.y);
   }
 
@@ -107,6 +107,7 @@ class PublicKey {
     const x = encoded.slice(4, 4 + xl);
     const yl = encoded.slice(4 + xl, 6 + xl).switchEndian().toInt();
     const y = encoded.slice(6 + xl, 6 + xl + yl);
+
     return new PublicKey(x, y, new Curve(curve));
   }
 
@@ -122,6 +123,7 @@ class PublicKey {
     const suffix = aux.slice(0, 4);
 
     const raw = ByteCollection.concat(prefix, encoded, suffix);
+
     return BinToText.base58Encode(raw.buffer);
   }
 
@@ -133,6 +135,7 @@ class PublicKey {
      */
   static fromBase58(base58) {
     const decoded = BinToText.base58Decode(base58);
+
     return PublicKey.decode(new ByteCollection(decoded.slice(1, -4)));
   }
 

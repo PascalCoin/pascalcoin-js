@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Abstract = require('./Abstract');
 const ByteCollection = require('./../ByteCollection');
 const NetProtocol = require('./Node/NetProtocol');

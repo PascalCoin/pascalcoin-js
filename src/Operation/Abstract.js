@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Payload = require('./../Crypto/Payload');
 const Signing = require('./../Crypto/Signing');
 const ByteCollection = require('./../ByteCollection');
@@ -115,9 +114,9 @@ class Abstract {
      */
   // eslint-disable-next-line class-methods-use-this
   bcFromInt(value, size = null) {
-    return (size === null
-      ? ByteCollection.fromInt(value)
-      : ByteCollection.fromInt(value, size)).switchEndian();
+    return (size === null ?
+      ByteCollection.fromInt(value) :
+      ByteCollection.fromInt(value, size)).switchEndian();
   }
 
   /**

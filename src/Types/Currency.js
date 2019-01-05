@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const BigNumber = require('bignumber.js');
 
 const P_VALUE = Symbol('value');
@@ -22,6 +21,7 @@ class Currency {
      */
   constructor(value) {
     let pasc = value;
+
     if (pasc instanceof Currency) {
       this[P_VALUE] = pasc.value;
       return;
@@ -112,7 +112,7 @@ class Currency {
   serialize() {
     return {
       pascal: this.toString(),
-      molina: this[P_VALUE].toString(),
+      molina: this[P_VALUE].toString()
     };
   }
 }

@@ -1,4 +1,3 @@
-const Payload = require('./../../Crypto/Payload');
 const RawOperations = require('./../../Types/RawOperations');
 const OperationAction = require('./OperationAction');
 

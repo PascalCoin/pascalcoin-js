@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const ByteCollection = require('./../ByteCollection');
 const AccountNumber = require('./AccountNumber');
 

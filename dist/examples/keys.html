@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="style.css">
+<script src="../pascalcoin.js"></script>
+<h3>Generate new keypair</h3>
+<button id="generate">Generate new KeyPair</button>
+
+<fieldset>
+    <legend>Public Key:</legend>
+    <label>X:</label> <code id="pubkey_x"></code><br />
+    <label>Y:</label> <code id="pubkey_y"></code><br />
+    <label>Curve Name:</label> <code id="pubkey_curve_name"></code><br />
+    <label>Curve ID:</label> <code id="pubkey_curve_id"></code><br />
+    <label>Base58:</label> <code id="pubkey_base58"></code><br />
+    <label>Hexa:</label> <code id="pubkey_hexa"></code><br />
+</fieldset>
+
+<script>
+    document.getElementById('generate').addEventListener('click', function() {
+        var keypair = pascalcoin.Keys.KeyPair.generate(new pascalcoin.Keys.Curve(pascalcoin.Keys.Curve.SECP256K1));
+        document.getElementById('pubkey_x').innerText = keypair.publicKey.x.toHex();
+        document.getElementById('pubkey_y').innerText = keypair.publicKey.y.toHex();
+        document.getElementById('pubkey_curve_name').innerText = keypair.publicKey.curve.name;
+        document.getElementById('pubkey_curve_id').innerText = keypair.publicKey.curve.id;
+        document.getElementById('pubkey_base58').innerText = keypair.publicKey.toBase58();
+        document.getElementById('pubkey_hexa').innerText = keypair.publicKey.encode().toHex();
+    });
+
+</script>

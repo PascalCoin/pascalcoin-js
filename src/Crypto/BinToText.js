@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const bs58 = require('bs58');
 
 /**

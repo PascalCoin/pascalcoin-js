@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Abstract = require('./../Abstract');
 const AccountNumber = require('../AccountNumber');
 const Currency = require('../Currency');
@@ -42,7 +41,6 @@ class Sender extends Abstract {
   get nOperation() {
     return this[P_N_OPERATION];
   }
-
 
   /**
      * Gets the account of the sender.

@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const forge = require('node-forge');
 
 /**
@@ -20,6 +19,7 @@ class Hashing {
      */
   static sha256(...buffers) {
     const md = forge.md.sha256.create();
+
     buffers.forEach(buffer => md.update(buffer.toString('binary')));
     return Buffer.from(md.digest().toHex(), 'hex');
   }

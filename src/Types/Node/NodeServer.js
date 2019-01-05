@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Abstract = require('./../Abstract');
 
 const P_PORT = Symbol('port');

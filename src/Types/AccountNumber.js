@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const P_ACCOUNT = Symbol('account');
 const P_CHECKSUM = Symbol('checksum');
 

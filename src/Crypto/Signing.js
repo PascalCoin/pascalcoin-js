@@ -17,12 +17,12 @@ class Signing {
   static sign(keyPair, digest) {
     const hash = new ByteCollection(Hashing.sha256(digest.buffer));
     const signature = ec.sign(hash.buffer, keyPair.ecPair.getPrivate('hex'), 'hex', {
-      canonical: true,
+      canonical: true
     });
 
     return {
       s: new ByteCollection(Buffer.from(signature.s.toArray())),
-      r: new ByteCollection(Buffer.from(signature.r.toArray())),
+      r: new ByteCollection(Buffer.from(signature.r.toArray()))
     };
   }
 }

@@ -1,5 +1,4 @@
 const Abstract = require('./Abstract');
-
 const ByteCollection = require('./../ByteCollection');
 const PublicKey = require('./../Keys/PublicKey');
 const Currency = require('./../Types/Currency');

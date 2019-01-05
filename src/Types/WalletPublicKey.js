@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const Abstract = require('./Abstract');
 const ByteCollection = require('./../ByteCollection');
 const Curve = require('./../Keys/Curve');
@@ -17,7 +16,6 @@ const P_B58_PUBKEY = Symbol('b58_pubkey');
 const P_EC_NID = Symbol('ec_nid');
 const P_X = Symbol('x');
 const P_Y = Symbol('y');
-
 
 /**
  * Holds information about a public key in the wallet (fetched via rpc).

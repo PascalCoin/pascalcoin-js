@@ -18,6 +18,7 @@ class OperationsBuilder {
 
   build() {
     let bc = ByteCollection.fromInt(this[P_OPERATIONS].length, 4).switchEndian();
+
     this[P_OPERATIONS].forEach((op) => {
       bc = ByteCollection.concat(bc, op.toRaw());
     });

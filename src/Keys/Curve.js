@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 /**
  * The list of available curves in pascalcoin.
  */
@@ -14,7 +13,7 @@ const CURVES = {
   714: 'secp256k1',
   715: 'secp384r1',
   729: 'sect283k1',
-  716: 'secp521r1',
+  716: 'secp521r1'
 };
 
 const ID = Symbol('id');
@@ -41,8 +40,8 @@ class Curve {
         throw new Error(`Unknown curve: ${curve}`);
       }
 
-      this[ID] = Object.keys(CURVES)[Object.values(CURVES).indexOf(this[NAME])];
       this[NAME] = curve.toString();
+      this[ID] = parseInt(Object.keys(CURVES)[Object.values(CURVES).indexOf(this[NAME])], 10);
     }
   }
 

@@ -1,29 +1,55 @@
 {
-  "name": "pascalcoin-js",
+  "name": "pascalcoin",
   "version": "0.0.1",
   "description": "A library to work with pascalcoin in nodejs and the browser.",
-  "main": "index.js",
+  "main": "dist/pascalcoin.js",
   "scripts": {
-    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "build": "webpack --env dev && webpack --env build && npm run test",
+    "dev": "webpack --progress --colors --watch --env dev",
+    "test": "mocha --require babel-register --colors ./test/*.spec.js",
+    "test:watch": "mocha --require babel-register --colors -w ./test/*.spec.js",
+    "test:cover": "cross-env NODE_ENV=test nyc mocha --require babel-register --colors test/*.js",
+    "repl": "node -i -e \"$(< ./lib/webpack-library-starter.js)\""
   },
   "author": "Benjamin Ansbach",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bignumber.js": "^8.0.1",
     "bs58": "^4.0.1",
     "eccrypto": "^1.0.4",
     "elliptic": "^6.4.1",
+    "eslint-config-airbnb": "^17.1.0",
     "jayson": "^2.1.0",
     "node-fetch": "^2.3.0",
     "node-forge": "^0.7.6",
     "p-queue": "^3.0.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb-standard": "^2.1.6",
-    "laravel-mix": "^4.0.13",
-    "mocha": "^5.2.0",
-    "vue-template-compiler": "^2.5.21"
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^8.0.0-beta.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^5.1.0",
+    "babel-preset-env": "^7.0.0-beta.3",
+    "babel-register": "^7.0.0-beta.3",
+    "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.0.1",
+    "eslint-loader": "^2.0.0",
+    "jsdom": "11.11.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "^4.0.1",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8",
+    "yargs": "^10.0.3",
+    "nyc": "^13.1.0"
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
   }
 }

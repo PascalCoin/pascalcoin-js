@@ -7,7 +7,6 @@
 
 const Executor = require('./Executor');
 const Caller = require('./Caller');
-
 const BaseAction = require('./Actions/BaseAction');
 const PagedAction = require('./Actions/PagedAction');
 const OperationAction = require('./Actions/OperationAction');
@@ -50,7 +49,7 @@ class Client {
      * @returns {BaseAction}
      */
   addNode(...nodes) {
-    return new BaseAction('addnode', { nodes: nodes.join(';') }, this[P_EXECUTOR]);
+    return new BaseAction('addnode', { nodes: nodes.join(');') }, this[P_EXECUTOR]);
   }
 
   /**
@@ -72,7 +71,7 @@ class Client {
      */
   getWalletAccounts(publicKey = null) {
     return new PagedAction('getwalletaccounts', {
-      pubkey: publicKey,
+      pubkey: publicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -85,7 +84,7 @@ class Client {
      */
   getWalletAccountsCount(publicKey = null) {
     return new BaseAction('getwalletaccountscount', {
-      pubkey: publicKey,
+      pubkey: publicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -140,7 +139,7 @@ class Client {
     return new BaseAction('getblocks', {
       last,
       start,
-      end,
+      end
     }, this[P_EXECUTOR]);
   }
 
@@ -163,7 +162,7 @@ class Client {
   getBlockOperation(block, opBlock) {
     return new BaseAction('getblockoperation', {
       block,
-      opblock: opBlock,
+      opblock: opBlock
     }, this[P_EXECUTOR]);
   }
 
@@ -175,7 +174,7 @@ class Client {
      */
   getBlockOperations(block) {
     return new PagedAction('getblockoperations', {
-      block,
+      block
     }, this[P_EXECUTOR]);
   }
 
@@ -189,7 +188,7 @@ class Client {
   getAccountOperations(account, depth = 100) {
     return new PagedAction('getaccountoperations', {
       account,
-      depth,
+      depth
     }, this[P_EXECUTOR]);
   }
 
@@ -241,7 +240,7 @@ class Client {
       exact,
       min_balance: minBalance,
       max_balance: maxBalance,
-      pubkey: publicKey,
+      pubkey: publicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -257,7 +256,7 @@ class Client {
     return new OperationAction('sendto', {
       sender,
       target,
-      amount,
+      amount
     }, this[P_EXECUTOR]);
   }
 
@@ -271,7 +270,7 @@ class Client {
   changeKey(account, newPublicKey) {
     return new OperationAction('changekey', {
       account,
-      new_pubkey: newPublicKey,
+      new_pubkey: newPublicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -292,7 +291,7 @@ class Client {
       account_signer: accountSigner,
       price,
       seller_account: sellerAccount,
-      new_pubkey: newPublicKey,
+      new_pubkey: newPublicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -305,7 +304,7 @@ class Client {
      */
   delistAccountForSale(accountTarget, accountSigner) {
     return new OperationAction('delistaccountforsale', {
-      account_target: accountTarget, account_signer: accountSigner,
+      account_target: accountTarget, account_signer: accountSigner
     }, this[P_EXECUTOR]);
   }
 
@@ -333,7 +332,7 @@ class Client {
       price,
       seller_account: sellerAccount,
       new_pubkey: newPublicKey,
-      amount,
+      amount
     }, this[P_EXECUTOR]);
   }
 
@@ -353,7 +352,7 @@ class Client {
       account_signer: accountSigner,
       new_pubkey: newPublicKey,
       new_name,
-      new_type,
+      new_type
     }, this[P_EXECUTOR]);
   }
 
@@ -398,7 +397,7 @@ class Client {
       new_pubkey: newPublicKey,
       new_name: newName,
       new_type: newType,
-      signer_pubkey: signerPublicKey,
+      signer_pubkey: signerPublicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -417,7 +416,7 @@ class Client {
       target,
       sender_pubkey: senderPublicKey,
       target_pubkey: targetPublicKey,
-      amount,
+      amount
     }, this[P_EXECUTOR]);
   }
 
@@ -430,7 +429,7 @@ class Client {
      */
   signChangeKey(account, oldPublicKey, newPublicKey) {
     return new SignOperationAction('signchangekey', {
-      account, old_pubkey: oldPublicKey, new_pubkey: newPublicKey,
+      account, old_pubkey: oldPublicKey, new_pubkey: newPublicKey
     }, this[P_EXECUTOR]);
   }
 
@@ -454,7 +453,7 @@ class Client {
       seller_account: sellerAccount,
       new_pubkey: newPublicKey,
       locked_until_block: lockedUntilBlock,
-      signer_pubkey: signerPublicKey,
+      signer_pubkey: signerPublicKey
     }, this[P_EXECUTOR]);
   }
 

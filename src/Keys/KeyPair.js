@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const elliptic = require('elliptic');
 
 const PrivateKey = require('./PrivateKey');
@@ -31,7 +30,8 @@ class KeyPair {
      */
   constructor(privateKey, publicKey, ecPair = null) {
     if (ecPair === null) {
-      ecPair = elliptic.ec(privateKey.curve.name).keyFromPrivate(privateKey.key.toHex(), 'hex'); // eslint-disable-line no-param-reassign
+      ecPair = elliptic.ec(privateKey.curve.name) // eslint-disable-line no-param-reassign
+        .keyFromPrivate(privateKey.key.toHex(), 'hex');
     }
 
     this[P_CURVE] = privateKey.curve;
@@ -67,6 +67,7 @@ class KeyPair {
       ByteCollection.fromHex(kp.getPrivate('hex')),
       curve,
     );
+
     return new KeyPair(privateKey, publicKey, kp);
   }
 
@@ -133,7 +134,8 @@ class KeyPair {
   static fromEncryptedPrivateKey(encryptedPrivateKey, password) {
     // eslint-disable-next-line no-param-reassign
     encryptedPrivateKey = ByteCollection.fromHex(encryptedPrivateKey);
-    const privateKey = PrivateKey.decrypt(password, encryptedPrivateKey);
+    const privateKey = PrivateKey.decrypt(encryptedPrivateKey, password);
+
     return KeyPair.fromPrivateKey(privateKey);
   }
 }

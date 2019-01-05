@@ -24,6 +24,7 @@ class Payload {
      */
   static encrypt(payload, method = 'none', password = null) {
     const payloadBytes = ByteCollection.fromString(payload);
+
     switch (method) {
       default:
         return payloadBytes;
@@ -45,6 +46,7 @@ class Payload {
       encryptedPayload.buffer,
       ByteCollection.fromString(password).buffer,
     );
+
     if (viaPassword === false) {
       // TODO: use ecies
     }

@@ -5,7 +5,6 @@
  * file that was distributed with this source code.
  */
 
-
 const BigNumber = require('bignumber.js');
 const Abstract = require('./Abstract');
 const PublicKey = require('./../Keys/PublicKey');

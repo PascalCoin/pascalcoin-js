@@ -1,0 +1,13 @@
+<script src="pascalcoin.js"></script>
+<a href="#" id="generate">Gen</a>
+<script>
+    document.getElementById('generate').addEventListener('click', function() {
+        console.log(pascalcoin.Keys.KeyPair.generate(new pascalcoin.Keys.Curve(714)));
+    });
+
+    // we will proxy th data for now
+    const rpc = pascalcoin.RPC.Client.factory('proxy.php');
+    rpc.findAccounts(null, null, true).execute().then((acc) => {
+        console.log(acc.length);
+    });
+</script>
