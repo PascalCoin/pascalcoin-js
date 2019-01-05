@@ -20,7 +20,7 @@ if (env === 'build') {
 const config = {
   mode: mode,
   entry: ['babel-polyfill', __dirname + '/src/PascalCoin.js'],
-  devtool: 'inline-source-map',
+  //devtool: 'inline-source-map',
   output: {
     path: __dirname + '/dist',
     filename: outputFile,
