@@ -22,7 +22,8 @@
   },
   "devDependencies": {
     "eslint-config-airbnb-standard": "^2.1.6",
-    "laravel-mix": "^2.1.14",
-    "mocha": "^5.2.0"
+    "laravel-mix": "^4.0.13",
+    "mocha": "^5.2.0",
+    "vue-template-compiler": "^2.5.21"
   }
 }
