@@ -1,0 +1,151 @@
+const Abstract = require('./Abstract');
+
+const ByteCollection = require('./../ByteCollection');
+const PublicKey = require('./../Keys/PublicKey');
+const AccountNumber = require('./../Types/AccountNumber');
+
+const P_ACCOUNT_SIGNER = Symbol('account_signer');
+const P_ACCOUNT_TARGET = Symbol('account_target');
+const P_NEW_PUBLIC_KEY = Symbol('new_public_key');
+const P_NEW_NAME = Symbol('new_name');
+const P_NEW_TYPE = Symbol('new_type');
+
+const P_WITH_NEW_PUBKEY = Symbol('with_new_pubkey');
+const P_WITH_NEW_NAME = Symbol('with_new_name');
+const P_WITH_NEW_TYPE = Symbol('with_new_type');
+
+/**
+ * Gets the change type of the op.
+ *
+ * @param {ChangeAccountInfo} op
+ * @returns {number}
+ */
+function getChangeType(op) {
+  let changeType = 0;
+  if (op[P_WITH_NEW_PUBKEY] === true) {
+    changeType |= 1;
+  }
+  if (op[P_WITH_NEW_NAME] === true) {
+    changeType |= 2;
+  }
+  if (op[P_WITH_NEW_TYPE] === true) {
+    changeType |= 4;
+  }
+
+  return changeType;
+}
+
+/**
+ * A transaction object that can be signed.
+ */
+class ChangeAccountInfo extends Abstract {
+  /**
+     * Gets the optype.
+     *
+     * @returns {number}
+     */
+  static get OPTYPE() {
+    return 8;
+  }
+
+  /**
+     * Constructor.
+     *
+     * @param {Account|AccountNumber|Number|String} accountSigner
+     * @param {Account|AccountNumber|Number|String} accountTarget
+     */
+  constructor(accountSigner, accountTarget) {
+    super();
+    this[P_ACCOUNT_SIGNER] = new AccountNumber(accountSigner);
+    this[P_ACCOUNT_TARGET] = new AccountNumber(accountTarget);
+    this[P_NEW_PUBLIC_KEY] = PublicKey.empty();
+    this[P_NEW_NAME] = ByteCollection.fromString('');
+    // TODO: Im not so sure if this is correct
+    this[P_NEW_TYPE] = 0;
+
+    this[P_WITH_NEW_PUBKEY] = false;
+    this[P_WITH_NEW_NAME] = false;
+    this[P_WITH_NEW_TYPE] = false;
+  }
+
+  /**
+     * Will set the new public key.
+     *
+     * @param {PublicKey} publicKey
+     * @returns {ChangeAccountInfo}
+     */
+  withNewPublicKey(publicKey) {
+    this[P_NEW_PUBLIC_KEY] = publicKey;
+    this[P_WITH_NEW_PUBKEY] = true;
+    return this;
+  }
+
+  /**
+     * Will set the new name of the account.
+     *
+     * @param {String} newName
+     * @returns {ChangeAccountInfo}
+     */
+  withNewName(newName) {
+    this[P_NEW_NAME] = ByteCollection.fromString(newName);
+    this[P_WITH_NEW_NAME] = true;
+    return this;
+  }
+
+  /**
+     * Will set the new type of the account.
+     *
+     * @param {Number} newType
+     * @returns {ChangeAccountInfo}
+     */
+  withNewType(newType) {
+    this[P_NEW_TYPE] = newType;
+    this[P_WITH_NEW_TYPE] = true;
+    return this;
+  }
+
+  /**
+     * Gets the digest of the operation.
+     *
+     * @returns {ByteCollection}
+     */
+  digest() {
+    return ByteCollection.concat(
+      this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
+      this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
+      this.bcFromInt(this.nOperation, 4),
+      this.bcFromInt(this.fee.toMolina(), 8),
+      this.bcFromBcWithSize(this.payload),
+      PublicKey.empty().encode(), // v2
+      this.bcFromInt(getChangeType(this)),
+      this[P_NEW_PUBLIC_KEY].encode(),
+      this.bcFromBcWithSize(this[P_NEW_NAME]),
+      this.bcFromInt(this[P_NEW_TYPE], 2),
+      this.bcFromInt(ChangeAccountInfo.OPTYPE),
+    );
+  }
+
+  /**
+     * Gets the raw implementation.
+     *
+     * @returns {ByteCollection}
+     */
+  toRaw() {
+    return ByteCollection.concat(
+      this.bcFromInt(ChangeAccountInfo.OPTYPE, 4),
+      this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
+      this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
+      this.bcFromInt(this.nOperation, 4),
+      this.bcFromInt(this.fee.toMolina(), 8),
+      this.bcFromBcWithSize(this.payload),
+      PublicKey.empty().encode(), // v2
+      this.bcFromInt(getChangeType(this)),
+      this[P_NEW_PUBLIC_KEY].encode(),
+      this.bcFromBcWithSize(this[P_NEW_NAME]),
+      this.bcFromInt(this[P_NEW_TYPE], 2),
+      this.bcFromSign(this.r, this.s),
+    );
+  }
+}
+
+module.exports = ChangeAccountInfo;

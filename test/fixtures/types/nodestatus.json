@@ -1,0 +1,48 @@
+{
+    "ready": true,
+    "ready_s": "",
+    "status_s": "Discovering servers",
+    "port": 4104,
+    "locked": false,
+    "timestamp": 1546045329,
+    "version": "TESTNET 4.0.2a",
+    "netprotocol": {
+        "ver": 9,
+        "ver_a": 9
+    },
+    "blocks": 208047,
+    "sbh": "BE04C1C189623B60D0A13574711C6338A7ED4B1991FE0EE45476ADB4A1DEB01B",
+    "pow": "0005F157DDF54EE8ADD8F7E37DD39B2601BC76967AE2AB08869D1288C9457D4B",
+    "netstats": {
+        "active": 3,
+        "clients": 0,
+        "servers": 3,
+        "servers_t": 3,
+        "total": 64,
+        "tclients": 0,
+        "tservers": 64,
+        "breceived": 33159500,
+        "bsend": 2003530
+    },
+    "openssl": "1010002F",
+    "nodeservers": [
+        {
+            "ip": "159.65.116.108",
+            "port": 4104,
+            "lastcon": 1546045324,
+            "attempts": 0
+        },
+        {
+            "ip": "45.32.136.161",
+            "port": 4104,
+            "lastcon": 1546045324,
+            "attempts": 0
+        },
+        {
+            "ip": "45.32.149.142",
+            "port": 4104,
+            "lastcon": 1546045324,
+            "attempts": 0
+        }
+    ]
+}
