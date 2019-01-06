@@ -22,7 +22,7 @@ const config = {
   entry: ['babel-polyfill', __dirname + '/src/PascalCoin.js'],
   //devtool: 'inline-source-map',
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/lib',
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
