@@ -36,12 +36,12 @@ function getIV(key, password, salt) {
  */
 class AES {
   /**
-     * Encrypts the given data with the given password.
-     *
-     * @param {Buffer} data
-     * @param {Buffer} password
-     * @returns {Buffer}
-     */
+   * Encrypts the given data with the given password.
+   *
+   * @param {Buffer} data
+   * @param {Buffer} password
+   * @returns {Buffer}
+   */
   static encrypt(data, password) {
     const salt = Buffer.from(forge.random.getBytes(8), 'binary');
     const key = getKey(password, salt);

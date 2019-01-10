@@ -19,10 +19,11 @@ class Payload {
      * @param {String} payload
      * @param {String} method
      * @param {String} password
+     * @param {KeyPair} password
      *
      * @return {ByteCollection}
      */
-  static encrypt(payload, method = 'none', password = null) {
+  static encrypt(payload, method = 'none', password = null, keyPair = null) {
     const payloadBytes = ByteCollection.fromString(payload);
 
     switch (method) {

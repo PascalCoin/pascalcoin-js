@@ -108,7 +108,7 @@ class PrivateKey {
      *
    * @param {ByteCollection|String} encrypted
      * @param {String} password
-     * @returns {Buffer}
+     * @returns {null|Buffer}
      */
   static decrypt(encrypted, password) {
     // eslint-disable-next-line no-param-reassign
@@ -116,7 +116,7 @@ class PrivateKey {
     const decrypted = AES.decrypt(encrypted.buffer, Buffer.from(password));
 
     if (decrypted === false) {
-      return false;
+      return null;
     }
 
     return PrivateKey.decode(new ByteCollection(decrypted));

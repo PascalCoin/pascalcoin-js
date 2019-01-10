@@ -136,6 +136,10 @@ class KeyPair {
     encryptedPrivateKey = ByteCollection.fromHex(encryptedPrivateKey);
     const privateKey = PrivateKey.decrypt(encryptedPrivateKey, password);
 
+    if (privateKey === null) {
+      return null;
+    }
+
     return KeyPair.fromPrivateKey(privateKey);
   }
 }

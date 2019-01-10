@@ -12,20 +12,19 @@ const P_NEW_PUBLIC_KEY = Symbol('new_public_key');
  */
 class ChangeKeySigned extends Abstract {
   /**
-     * Gets the optype.
-     *
-     * @returns {number}
-     */
+   * Gets the optype.
+   *
+   * @returns {number}
+   */
   static get OPTYPE() {
     return 7;
   }
 
   /**
-     *
-     * @param {Account|AccountNumber|Number|String} accountSigner
-     * @param {Account|AccountNumber|Number|String}accountTarget
-     * @param newPublicKey
-     */
+   *
+   * @param {Account|AccountNumber|Number|String} accountSigner
+   * @param {PublicKey} newPublicKey
+   */
   constructor(accountSigner, accountTarget, newPublicKey) {
     super();
     this[P_ACCOUNT_SIGNER] = new AccountNumber(accountSigner);
@@ -34,18 +33,14 @@ class ChangeKeySigned extends Abstract {
   }
 
   /**
-     * Gets the digest of the operation.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the digest of the operation.
+   *
+   * @returns {ByteCollection}
+   */
   digest() {
-    let bc = this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4);
-
-    if (!this[P_ACCOUNT_SIGNER].equals(this[P_ACCOUNT_TARGET])) {
-      bc = bc.append(this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4));
-    }
     return ByteCollection.concat(
-      bc,
+      this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
+      this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
       this.bcFromInt(this.nOperation, 4),
       this.bcFromInt(this.fee.toMolina(), 8),
       this.payload,
@@ -56,10 +51,10 @@ class ChangeKeySigned extends Abstract {
   }
 
   /**
-     * Gets the raw implementation.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the raw implementation.
+   *
+   * @returns {ByteCollection}
+   */
   toRaw() {
     return ByteCollection.concat(
       this.bcFromInt(ChangeKeySigned.OPTYPE, 4),
@@ -69,6 +64,7 @@ class ChangeKeySigned extends Abstract {
       this.bcFromInt(this.fee.toMolina(), 8),
       this.bcFromBcWithSize(this.payload),
       PublicKey.empty().encode(),
+      this.bcFromInt(this[P_NEW_PUBLIC_KEY].encode().length, 2),
       this[P_NEW_PUBLIC_KEY].encode(),
       this.bcFromSign(this.r, this.s),
     );

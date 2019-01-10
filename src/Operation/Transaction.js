@@ -22,12 +22,20 @@ class Transaction extends Abstract {
   }
 
   /**
+   * Gets the sender account.
+   * @returns {AccountNumber}
+   */
+  get sender() {
+    return this[P_SENDER];
+  }
+
+  /**
      * Creates a new Transaction instance with the given data. The payload is
      * empty by default and not encoded.
      *
-     * @param {AccountNumber|Account|String|Number} sender
-     * @param {AccountNumber|Account|String|Number} target
-     * @param {Currency} amount
+   * @param {AccountNumber|Account|String|Number} sender
+   * @param {AccountNumber|Account|String|Number} target
+   * @param {Currency} amount
      */
   constructor(sender, target, amount) {
     super();

@@ -37,7 +37,6 @@ class Abstract {
      * @returns {Abstract}
      */
   withPayload(payload, method = 'none', key = null) {
-    this.throwIfSigned();
 
     this[P_PAYLOAD] = Payload.encrypt(payload, method, key);
     return this;
@@ -50,8 +49,7 @@ class Abstract {
      * @returns {Abstract}
      */
   withFee(fee) {
-    this.throwIfSigned();
-    this[P_FEE] = fee;
+    this[P_FEE] = new Currency(fee);
     return this;
   }
 
@@ -75,7 +73,6 @@ class Abstract {
    */
   sign(keyPair, nOperation, useDigest = false) {
     this[P_N_OPERATION] = nOperation;
-    this.throwIfSigned();
     const digest = this.digest();
 
     let signResult;
@@ -225,21 +222,12 @@ class Abstract {
   }
 
   /**
-     * Gets a value indicating whether the current operation is already signed.
-     *
-     * @returns {boolean}
-     */
+   * Gets a value indicating whether the current operation is already signed.
+   *
+   * @returns {boolean}
+   */
   get isSigned() {
     return this[P_S] !== null && this[P_R] !== null;
-  }
-
-  /**
-     * Throws an error if the op is already signed.
-     */
-  throwIfSigned() {
-    if (this.isSigned) {
-      throw new Error("An already signed operation can't be altered.");
-    }
   }
 }
 

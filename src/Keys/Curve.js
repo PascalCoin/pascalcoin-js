@@ -5,6 +5,8 @@
  * file that was distributed with this source code.
  */
 
+const elliptic = require('elliptic');
+
 /**
  * The list of available curves in pascalcoin.
  */
@@ -79,6 +81,14 @@ class Curve {
      */
   static getDefaultCurve() {
     return new Curve(714);
+  }
+
+  /**
+   *
+   * @returns {*}
+   */
+  get ec() {
+    return elliptic.ec(CURVES[this.id]);
   }
 }
 

@@ -12,13 +12,26 @@ const forge = require('node-forge');
  */
 class Hashing {
   /**
-     * Calculates the sha256 hash from the given buffers.
-     *
-     * @param {...Buffer} buffers
-     * @returns {Buffer}
-     */
+   * Calculates the sha256 hash from the given buffers.
+   *
+   * @param {...Buffer} buffers
+   * @returns {Buffer}
+   */
   static sha256(...buffers) {
     const md = forge.md.sha256.create();
+
+    buffers.forEach(buffer => md.update(buffer.toString('binary')));
+    return Buffer.from(md.digest().toHex(), 'hex');
+  }
+
+  /**
+   * Calculates the sha512 hash from the given buffers.
+   *
+   * @param {...Buffer} buffers
+   * @returns {Buffer}
+   */
+  static sha512(...buffers) {
+    const md = forge.md.sha512.create();
 
     buffers.forEach(buffer => md.update(buffer.toString('binary')));
     return Buffer.from(md.digest().toHex(), 'hex');

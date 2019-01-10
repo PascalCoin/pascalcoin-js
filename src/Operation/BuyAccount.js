@@ -1,5 +1,4 @@
 const Abstract = require('./Abstract');
-
 const ByteCollection = require('./../ByteCollection');
 const PublicKey = require('./../Keys/PublicKey');
 const Currency = require('./../Types/Currency');
@@ -17,10 +16,10 @@ const P_NEW_PUBLIC_KEY = Symbol('new_public_key');
  */
 class BuyAccount extends Abstract {
   /**
-     * Gets the optype.
-     *
-     * @returns {number}
-     */
+   * Gets the optype.
+   *
+   * @returns {number}
+   */
   static get OPTYPE() {
     return 6;
   }
@@ -32,9 +31,6 @@ class BuyAccount extends Abstract {
    * @param {AccountNumber|Account|String|Number} sender
    * @param {AccountNumber|Account|String|Number} target
    * @param {Currency} amount
-   * @param {Currency} accountPrice
-   * @param {AccountNumber|Account|String|Number} sellerAccount
-   * @param {AccountNumber|Account|String|Number} newPublicKey
    */
   constructor(sender, target, amount, accountPrice, sellerAccount, newPublicKey) {
     super();
@@ -42,15 +38,15 @@ class BuyAccount extends Abstract {
     this[P_TARGET] = new AccountNumber(target);
     this[P_AMOUNT] = new Currency(amount);
     this[P_ACCOUNT_PRICE] = new Currency(accountPrice);
-    this[P_SELLER_ACCOUNT] = new Currency(sellerAccount);
-    this[P_NEW_PUBLIC_KEY] = new Currency(newPublicKey);
+    this[P_SELLER_ACCOUNT] = new AccountNumber(sellerAccount);
+    this[P_NEW_PUBLIC_KEY] = newPublicKey;
   }
 
   /**
-     * Gets the digest of the operation.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the digest of the operation.
+   *
+   * @returns {ByteCollection}
+   */
   digest() {
     return ByteCollection.concat(
       this.bcFromInt(this[P_SENDER].account, 4),
@@ -59,16 +55,19 @@ class BuyAccount extends Abstract {
       this.bcFromInt(this[P_AMOUNT].toMolina(), 8),
       this.bcFromInt(this.fee.toMolina(), 8),
       this.payload,
-      ByteCollection.fromInt(0, 2),
+      this.bcFromInt(PublicKey.empty().curve.id, 2), // just zero as curve id
+      this.bcFromInt(this[P_ACCOUNT_PRICE].toMolina(), 8),
+      this.bcFromInt(this[P_SELLER_ACCOUNT].account, 4),
+      this[P_NEW_PUBLIC_KEY].encode(),
       ByteCollection.fromInt(BuyAccount.OPTYPE),
     );
   }
 
   /**
-     * Gets the signed raw operations.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the signed raw operations.
+   *
+   * @returns {ByteCollection}
+   */
   toRaw() {
     return ByteCollection.concat(
       this.bcFromInt(BuyAccount.OPTYPE, 4),
@@ -79,6 +78,10 @@ class BuyAccount extends Abstract {
       this.bcFromInt(this.fee.toMolina(), 8),
       this.bcFromBcWithSize(this.payload),
       PublicKey.empty().encode(), // v2
+      this.bcFromInt(2, 1), // buy account
+      this.bcFromInt(this[P_ACCOUNT_PRICE].toMolina(), 8),
+      this.bcFromInt(this[P_SELLER_ACCOUNT].account, 4),
+      this[P_NEW_PUBLIC_KEY].encode(),
       this.bcFromSign(this.r, this.s),
     );
   }

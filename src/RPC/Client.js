@@ -94,13 +94,13 @@ class Client {
      * @returns {BaseAction}
      */
   getWalletPublicKeys() {
-    return new PagedAction('getwalletpubkeys', {
-    }, this[P_EXECUTOR]);
+    return new PagedAction('getwalletpubkeys', { }, this[P_EXECUTOR]);
   }
 
   /**
+     * Gets the information about a single wallets public key.
      *
-     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} pubkey
+     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} publicKey
      * @returns {BaseAction}
      */
   getWalletPublicKey(publicKey) {
@@ -110,7 +110,7 @@ class Client {
   /**
      * Gets the balance of the wallet with the given keys or all keys.
      *
-     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} pubkey
+     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} publicKey
      * @returns {BaseAction}
      */
   getWalletCoins(publicKey = null) {
@@ -128,7 +128,7 @@ class Client {
   }
 
   /**
-     * Gets the list of blocks.
+     * Gets a list of blocks.
      *
      * @param {Number} last
      * @param {Number} start
@@ -149,14 +149,14 @@ class Client {
      * @returns {BaseAction}
      */
   getBlockCount() {
-    return new BaseAction('getblockcount', {}, this[P_EXECUTOR]);
+    return new BaseAction('getblockcount', { }, this[P_EXECUTOR]);
   }
 
   /**
      * Gets the operation in the given block at the given position.
      *
      * @param {Block||Number} block
-     * @param {Number} opblock
+     * @param {Number} opBlock
      * @returns {BaseAction}
      */
   getBlockOperation(block, opBlock) {
@@ -170,12 +170,10 @@ class Client {
      * Gets all operations of the given block.
      *
      * @param {Block|Number} block
-     * @returns {BaseAction}
+     * @returns {PagedAction}
      */
   getBlockOperations(block) {
-    return new PagedAction('getblockoperations', {
-      block
-    }, this[P_EXECUTOR]);
+    return new PagedAction('getblockoperations', { block }, this[P_EXECUTOR]);
   }
 
   /**
@@ -183,19 +181,16 @@ class Client {
      *
      * @param {Account|AccountNumber|Number|String} account
      * @param {Number} depth
-     * @returns {BaseAction}
+     * @returns {PagedAction}
      */
   getAccountOperations(account, depth = 100) {
-    return new PagedAction('getaccountoperations', {
-      account,
-      depth
-    }, this[P_EXECUTOR]);
+    return new PagedAction('getaccountoperations', { account, depth }, this[P_EXECUTOR]);
   }
 
   /**
      * Gets the pending operations.
      *
-     * @returns {BaseAction}
+     * @returns {PagedAction}
      */
   getPendings() {
     return new PagedAction('getpendings', { }, this[P_EXECUTOR]);
@@ -207,13 +202,13 @@ class Client {
      * @returns {BaseAction}
      */
   getPendingsCount() {
-    return new BaseAction('getpendingscount', {}, this[P_EXECUTOR]);
+    return new BaseAction('getpendingscount', { }, this[P_EXECUTOR]);
   }
 
   /**
      * Gets the operation identified by the given ophash.
      *
-     * @param {String|ByteCollection|OperationHash} ophash
+     * @param {String|ByteCollection|OperationHash} opHash
      * @returns {BaseAction}
      */
   findOperation(opHash) {
@@ -221,22 +216,23 @@ class Client {
   }
 
   /**
-     * Finds accounts with the given search criteria.
-     *
-     * @param {String} name
-     * @param {Number} type
-     * @param {Boolean} exact
-     * @param {Currency} min_balance
-     * @param {Currency} max_balance
-     * @param {WalletPublicKey|PublicKey|ByteCollection|String} pubkey
-     * @returns {PagedAction}
-     */
-  findAccounts(name = null, type = null, onlyListed = false, exact = null,
-    minBalance = null, maxBalance = null, publicKey = null) {
+   * Finds accounts with the given search criteria.
+   *
+   * @param {String} name
+   * @param {Number} type
+   * @param {Boolean} onlyAccountsForSale
+   * @param {Boolean} exact
+   * @param {Number|Currency} minBalance
+   * @param {Number|Currency} maxBalance
+   * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} publicKey
+   * @returns {PagedAction}
+   */
+  findAccounts(name = '', type = -1, onlyAccountsForSale = false, exact = true,
+    minBalance = -1, maxBalance = -1, publicKey = null) {
     return new PagedAction('findaccounts', {
       name,
       type,
-      listed: onlyListed,
+      listed: onlyAccountsForSale,
       exact,
       min_balance: minBalance,
       max_balance: maxBalance,
@@ -253,18 +249,14 @@ class Client {
      * @returns {OperationAction}
      */
   sendTo(sender, target, amount) {
-    return new OperationAction('sendto', {
-      sender,
-      target,
-      amount
-    }, this[P_EXECUTOR]);
+    return new OperationAction('sendto', { sender, target, amount }, this[P_EXECUTOR]);
   }
 
   /**
      * Changes the key of an account.
      *
      * @param {Account|AccountNumber|Number|String} account
-     * @param {ByteCollection|PublicKey|WalletPublicKey|string} new_pubkey
+     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} newPublicKey
      * @returns {OperationAction}
      */
   changeKey(account, newPublicKey) {
@@ -277,11 +269,11 @@ class Client {
   /**
      * Lists an account for sale.
      *
-     * @param {Account|AccountNumber|Number|String} account_target
-     * @param {Account|AccountNumber|Number|String} account_signer
+     * @param {Account|AccountNumber|Number|String} accountTarget
+     * @param {Account|AccountNumber|Number|String} accountSigner
      * @param {Currency} price
-     * @param {Account|AccountNumber|Number|String} seller_account
-     * @param {ByteCollection|String|PublicKey|WalletPublicKey} new_pubkey
+     * @param {Account|AccountNumber|Number|String} sellerAccount
+     * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} newPublicKey
      * @returns {OperationAction}
      */
   listAccountForSale(accountTarget, accountSigner, price, sellerAccount,
@@ -298,8 +290,8 @@ class Client {
   /**
      * Lists an account for sale.
      *
-     * @param {Account|AccountNumber|Number|String} account_target
-     * @param {Account|AccountNumber|Number|String} account_signer
+     * @param {Account|AccountNumber|Number|String} accountTarget
+     * @param {Account|AccountNumber|Number|String} accountSigner
      * @returns {OperationAction}
      */
   delistAccountForSale(accountTarget, accountSigner) {
@@ -311,17 +303,12 @@ class Client {
   /**
      * Buys an account
      *
-     * @param {Account|AccountNumber|Number|String} buyer_account
-     * @param {Account|AccountNumber|Number|String} account_to_purchase
-     * @param {Currency} price
-     * @param {Account|AccountNumber|Number|String} seller_account
-     * @param {ByteCollection|String|PublicKey|WalletPublicKey} new_enc_pubkey
-     * @param {String} new_b58_pubkey
-     * @param {Currency} amount
-     * @param {Currency} fee
-     * @param {ByteCollection|String} payload
-     * @param {String} payload_method
-     * @param {String} pwd
+     * @param {Account|AccountNumber|Number|String} buyerAccount
+     * @param {Account|AccountNumber|Number|String} accountToPurchase
+     * @param {Currency|Number} price
+     * @param {Account|AccountNumber|Number|String} sellerAccount
+   * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} newPublicKey
+     * @param {Currency|Number} amount
      * @returns {OperationAction}
      */
   buyAccount(buyerAccount, accountToPurchase, price = null, sellerAccount = null,
@@ -337,12 +324,13 @@ class Client {
   }
 
   /**
-     *
-     * @param accountTarget
-     * @param accountSigner
-     * @param newPublicKey
-     * @param new_name
-     * @param new_type
+   * Changes the info of an account.
+   *
+     * @param {Account|AccountNumber|Number|String} accountTarget
+     * @param {Account|AccountNumber|Number|String} accountSigner
+   * @param {String|ByteCollection|PublicKey|WalletPublicKey|PrivateKey|KeyPair} newPublicKey
+     * @param {String} new_name
+     * @param {Number} new_type
      * @returns {OperationAction}
      */
   changeAccountInfo(accountTarget, accountSigner, newPublicKey = null,
@@ -357,8 +345,9 @@ class Client {
   }
 
   /**
-     *
-     * @param rawOperations
+     * Gets the operation infos of the given raw operations string.
+   *
+     * @param {String|ByteCollection} rawOperations
      * @returns {BaseAction}
      */
   operationsInfo(rawOperations) {
@@ -366,12 +355,12 @@ class Client {
   }
 
   /**
-     *
-     * @param rawOperations
+     * Executes the given raw operations
+   * @param {String|ByteCollection} rawOperations
      * @returns {BaseAction}
      */
   executeOperations(rawOperations) {
-    return new BaseAction('executeoperations', { rawoperations: rawOperations }, this[P_EXECUTOR]);
+    return new BaseAction('executeoperations', {rawoperations: rawOperations}, this[P_EXECUTOR]);
   }
 
   /**

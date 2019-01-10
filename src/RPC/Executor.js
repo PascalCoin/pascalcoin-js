@@ -29,9 +29,9 @@ function transformRpcParams(params) {
     // we weill delete fields that are null
     if (item === null) {
 
-    } else if (field.indexOf('publicKey') !== -1) {
+    } else if (field.indexOf('pubkey') !== -1) {
       // correct the field name..
-      const newField = field.replace('publicKey', 'publicKey');
+      let newField = field.replace('pubkey', 'enc_pubkey');
 
       // and set the value
       if (item instanceof ByteCollection) {
@@ -45,6 +45,7 @@ function transformRpcParams(params) {
       } else if (item instanceof KeyPair) {
         newParams[newField] = item.publicKey.encode().toHex();
       } else {
+        newField = newField.replace('enc_pubkey', 'b58_pubkey');
         newParams[newField] = item.toString();
       }
     } else if (field === 'payload' && !(item instanceof ByteCollection)) {
