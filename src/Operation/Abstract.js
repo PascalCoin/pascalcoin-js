@@ -51,7 +51,7 @@ class Abstract {
      */
   withFee(fee) {
     this.throwIfSigned();
-    this[P_FEE] = fee;
+    this[P_FEE] = new Currency(fee);
     return this;
   }
 

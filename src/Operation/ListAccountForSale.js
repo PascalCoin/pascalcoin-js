@@ -21,7 +21,7 @@ class ListAccountForSale extends Abstract {
      * @returns {number}
      */
   static get OPTYPE() {
-    return 3;
+    return 4;
   }
 
   /**
@@ -87,7 +87,10 @@ class ListAccountForSale extends Abstract {
       this.bcFromInt(this.nOperation, 4),
       this.bcFromInt(this[P_PRICE].toMolina(), 8),
       this.bcFromInt(this[P_ACCOUNT_TO_PAY].account, 4),
-      PublicKey.empty().encode(), // v2
+      this.bcFromInt(PublicKey.empty().curve.id, 2), // just zero as curve id
+      this.bcFromInt(0, 2), // x length
+      this.bcFromInt(0, 2), // y length
+      this.bcFromInt(this[P_NEW_PUBLIC_KEY].encode().length, 2),
       this[P_NEW_PUBLIC_KEY].encode(),
       this.bcFromInt(this[P_LOCKED_UNTIL_BLOCK], 4),
       this.bcFromInt(this.fee.toMolina(), 8),
