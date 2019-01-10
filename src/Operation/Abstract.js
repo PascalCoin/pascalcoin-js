@@ -51,7 +51,7 @@ class Abstract {
      */
   withFee(fee) {
     this.throwIfSigned();
-    this[P_FEE] = new Currency(fee);
+    this[P_FEE] = fee;
     return this;
   }
 
@@ -66,17 +66,25 @@ class Abstract {
   }
 
   /**
-     * Signs the given operation and returns a new rawoperations string.
-     *
-     * @param {KeyPair} keyPair
-     * @param {Number} nOperation
-     * @returns {Abstract}
-     */
-  sign(keyPair, nOperation) {
+   * Signs the given operation and returns a new rawoperations string.
+   *
+   * @param {KeyPair} keyPair
+   * @param {Number} nOperation
+   * @param {Boolean} useDigest
+   * @returns {Abstract}
+   */
+  sign(keyPair, nOperation, useDigest = false) {
     this[P_N_OPERATION] = nOperation;
     this.throwIfSigned();
     const digest = this.digest();
-    const signResult = Signing.sign(keyPair, digest);
+
+    let signResult;
+
+    if (useDigest === true) {
+      signResult = Signing.signWithDigest(keyPair, digest);
+    } else {
+      signResult = Signing.signWithHash(keyPair, digest);
+    }
 
     // save results
     this[P_R] = signResult.r;

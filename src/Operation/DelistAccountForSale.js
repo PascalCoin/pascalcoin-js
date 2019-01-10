@@ -46,17 +46,17 @@ class DelistAccountForSale extends Abstract {
    */
   digest() {
     return ByteCollection.concat(
-        this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
-        this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
-        this.bcFromInt(this.nOperation, 4),
-        this.bcFromInt(this[P_PRICE].toMolina(), 8),
-        this.bcFromInt(this[P_ACCOUNT_TO_PAY].account, 4),
-        this.bcFromInt(this.fee.toMolina(), 8),
-        this.payload,
-        this.bcFromInt(PublicKey.empty().curve.id, 2), // just zero as curve id
-        this[P_NEW_PUBLIC_KEY].encode(),
-        this.bcFromInt(this[P_LOCKED_UNTIL_BLOCK], 4),
-        this.bcFromInt(DelistAccountForSale.OPTYPE),
+      this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
+      this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
+      this.bcFromInt(this.nOperation, 4),
+      this.bcFromInt(this[P_PRICE].toMolina(), 8),
+      this.bcFromInt(this[P_ACCOUNT_TO_PAY].account, 4),
+      this.bcFromInt(this.fee.toMolina(), 8),
+      this.payload,
+      this.bcFromInt(PublicKey.empty().curve.id, 2), // just zero as curve id
+      this[P_NEW_PUBLIC_KEY].encode(),
+      this.bcFromInt(this[P_LOCKED_UNTIL_BLOCK], 4),
+      this.bcFromInt(DelistAccountForSale.OPTYPE),
     );
   }
 
@@ -67,14 +67,14 @@ class DelistAccountForSale extends Abstract {
    */
   toRaw() {
     return ByteCollection.concat(
-        this.bcFromInt(DelistAccountForSale.OPTYPE, 4),
-        this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
-        this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
-        this.bcFromInt(5, 2), // list account for sale
-        this.bcFromInt(this.nOperation, 4),
-        this.bcFromInt(this.fee.toMolina(), 8),
-        this.bcFromBcWithSize(this.payload),
-        this.bcFromSign(this.r, this.s),
+      this.bcFromInt(DelistAccountForSale.OPTYPE, 4),
+      this.bcFromInt(this[P_ACCOUNT_SIGNER].account, 4),
+      this.bcFromInt(this[P_ACCOUNT_TARGET].account, 4),
+      this.bcFromInt(5, 2), // list account for sale
+      this.bcFromInt(this.nOperation, 4),
+      this.bcFromInt(this.fee.toMolina(), 8),
+      this.bcFromBcWithSize(this.payload),
+      this.bcFromSign(this.r, this.s),
     );
   }
 }
