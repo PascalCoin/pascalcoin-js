@@ -117,7 +117,7 @@ class Operation extends Abstract {
       this[P_BALANCE] = new Currency(data.balance);
     }
 
-    this[P_OPHASH] = new OperationHash(data.ophash);
+    this[P_OPHASH] = OperationHash.decode(ByteCollection.fromHex(data.ophash));
 
     this[P_OLD_OPHASH] = null;
     if (data.old_ophash !== undefined) {
