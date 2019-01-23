@@ -39,6 +39,7 @@ const RawOperations = require('./Types/RawOperations');
 const OperationHash = require('./Types/OperationHash');
 const WalletPublicKey = require('./Types/WalletPublicKey');
 const Block = require('./Types/Block');
+const Wallet = require('./Wallet');
 
 module.exports = {
   ByteCollection,
@@ -62,5 +63,6 @@ module.exports = {
     NodeStatus, NodeServer, NetProtocol, NetStats, Operation, Sender,
     Changer, Receiver, Account, AccountNumber, Currency, RawOperations,
     OperationHash, WalletPublicKey, Block
-  }
+  },
+  Wallet
 };

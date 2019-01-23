@@ -13,9 +13,9 @@ const elliptic = require('elliptic');
 const CURVES = {
   0: 'empty',
   714: 'secp256k1',
-  715: 'secp384r1',
+  715: 'p384',
   729: 'sect283k1',
-  716: 'secp521r1'
+  716: 'p521'
 };
 
 const ID = Symbol('id');
