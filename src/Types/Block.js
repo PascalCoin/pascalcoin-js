@@ -9,6 +9,7 @@ const BigNumber = require('bignumber.js');
 const Abstract = require('./Abstract');
 const PublicKey = require('./../Keys/PublicKey');
 const Currency = require('./Currency');
+const AccountNumber = require('./AccountNumber');
 const OperationHash = require('./OperationHash');
 const ByteCollection = require('./../ByteCollection');
 
@@ -201,6 +202,21 @@ class Block extends Abstract {
      */
   get operations() {
     return this[P_OPERATIONS];
+  }
+
+  /**
+   * Gets the list of accounts created.
+   *
+   * @returns {AccountNumber[]}
+   */
+  get createdAccounts() {
+    return [
+      new AccountNumber(this[P_BLOCK] * 5),
+      new AccountNumber(this[P_BLOCK] * 5 + 1),
+      new AccountNumber(this[P_BLOCK] * 5 + 2),
+      new AccountNumber(this[P_BLOCK] * 5 + 3),
+      new AccountNumber(this[P_BLOCK] * 5 + 4)
+    ];
   }
 }
 

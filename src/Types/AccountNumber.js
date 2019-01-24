@@ -7,6 +7,7 @@
 
 const P_ACCOUNT = Symbol('account');
 const P_CHECKSUM = Symbol('checksum');
+const P_CREATED_IN_BLOCK = Symbol('created_in_block');
 
 /**
  * A simple type that holds an account number in a reliable way.
@@ -45,6 +46,8 @@ class AccountNumber {
     } else {
       throw new Error(`Unable to parse Account: ${account.toString()}`);
     }
+
+    this[P_CREATED_IN_BLOCK] = Math.floor(this[P_ACCOUNT] / 5);
   }
 
   /**
@@ -63,6 +66,15 @@ class AccountNumber {
      */
   get checksum() {
     return this[P_CHECKSUM];
+  }
+
+  /**
+   * Gets the block number the account was created in.
+   *
+   * @returns {Number}
+   */
+  get createdInBlock() {
+    return this[P_CREATED_IN_BLOCK];
   }
 
   /**
