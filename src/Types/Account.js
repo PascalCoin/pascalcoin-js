@@ -1,4 +1,5 @@
 /**
+ /**
  * Copyright (c) Benjamin Ansbach - all rights reserved.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -30,28 +31,28 @@ const P_NEW_ENC_PUBKEY = Symbol('new_enc_pubkey');
  */
 class Account extends Abstract {
   /**
-     * The state of an account when it is listed for sale.
-     *
-     * @returns {string}
-     */
+   * The state of an account when it is listed for sale.
+   *
+   * @returns {string}
+   */
   static get STATE_LISTED() {
     return 'listed';
   }
 
   /**
-     * The state of an account when it is not listed.
-     *
-     * @returns {string}
-     */
+   * The state of an account when it is not listed.
+   *
+   * @returns {string}
+   */
   static get STATE_NORMAL() {
     return 'normal';
   }
 
   /**
-     * Constructor
-     *
-     * @param {Object} data
-     */
+   * Constructor
+   *
+   * @param {Object} data
+   */
   constructor(data) {
     super(data);
 
@@ -88,122 +89,131 @@ class Account extends Abstract {
   }
 
   /**
-     * Gets the account number of the account.
-     *
-     * @returns {AccountNumber}
-     */
+   * Gets the account number of the account.
+   *
+   * @returns {AccountNumber}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the public key of the account.
-     *
-     * @returns {PublicKey}
-     */
+   * Gets the public key of the account.
+   *
+   * @returns {PublicKey}
+   */
   get publicKey() {
     return this[P_ENC_PUBKEY];
   }
 
   /**
-     * Gets the balance of the account.
-     *
-     * @returns {Currency}
-     */
+   * Gets the balance of the account.
+   *
+   * @returns {Currency}
+   */
   get balance() {
     return this[P_BALANCE];
   }
 
   /**
-     * Gets the number of operations of this account.
-     *
-     * @returns {Number}
-     */
+   * Gets the number of operations of this account.
+   *
+   * @returns {Number}
+   */
   get nOperation() {
     return this[P_N_OPERATION];
   }
 
   /**
-     * Gets the block number when the account was last updated.
-     *
-     * @returns {Number}
-     */
+   * Gets the block number when the account was last updated.
+   *
+   * @returns {Number}
+   */
   get updatedB() {
     return this[P_UPDATED_B];
   }
 
   /**
-     * Gets the state of the account (normal, listed).
-     *
-     * @returns {String}
-     */
+   * Gets the state of the account (normal, listed).
+   *
+   * @returns {String}
+   */
   get state() {
     return this[P_STATE];
   }
 
   /**
-     * Gets the name of the account.
-     *
-     * @returns {String}
-     */
+   * Gets the name of the account.
+   *
+   * @returns {String}
+   */
   get name() {
     return this[P_NAME];
   }
 
   /**
-     * Gets the type of the account.
-     *
-     * @returns {Number}
-     */
+   * Gets the type of the account.
+   *
+   * @returns {Number}
+   */
   get type() {
     return this[P_TYPE];
   }
 
   /**
-     * Gets the block number until the account is locked when it's listed for
-     * sale.
-     *
-     * @returns {Number|null}
-     */
+   * Gets the block number until the account is locked when it's listed for
+   * sale.
+   *
+   * @returns {Number|null}
+   */
   get lockedUntilBlock() {
     return this[P_LOCKED_UNTIL_BLOCK];
   }
 
   /**
-     * Gets the price of the account in case its listed.
-     *
-     * @returns {Currency|null}
-     */
+   * Gets the price of the account in case its listed.
+   *
+   * @returns {Currency|null}
+   */
   get price() {
     return this[P_PRICE];
   }
 
   /**
-     * Gets the account of the seller in case the account is listed for sale.
-     *
-     * @returns {AccountNumber|null}
-     */
+   * Gets the account of the seller in case the account is listed for sale.
+   *
+   * @returns {AccountNumber|null}
+   */
   get sellerAccount() {
     return this[P_SELLER_ACCOUNT];
   }
 
   /**
-     * Gets a flag indicating whether the account is for sale. Attention:
-     * null and false = not for sale.
-     *
-     * @returns {boolean}
-     */
+   * Gets a flag indicating whether the account is for sale. Attention:
+   * null and false = not for sale.
+   *
+   * @returns {boolean}
+   */
   get privateSale() {
     return !!this[P_PRIVATE_SALE];
   }
 
   /**
-     * Gets the new public key in case of a escrow.
-     *
-     * @returns {PublicKey|null}
-     */
+   * Gets the new public key in case of a escrow.
+   *
+   * @returns {PublicKey|null}
+   */
   get newPublicKey() {
     return this[P_NEW_ENC_PUBKEY];
+  }
+
+  /**
+   * Gets a value indicating whether the account is for sale.
+   *
+   * @returns {boolean}
+   */
+  isForSale() {
+    return this[P_STATE] === Account.STATE_LISTED;
   }
 }
 

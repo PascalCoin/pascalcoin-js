@@ -20,10 +20,10 @@ const P_N_OPERATION = Symbol('nOperation');
  */
 class Sender extends Abstract {
   /**
-     * Creates a new instance of the Sender class.
-     *
-     * @param {Object} data
-     */
+   * Creates a new instance of the Sender class.
+   *
+   * @param {Object} data
+   */
   constructor(data) {
     super(data);
 
@@ -34,37 +34,37 @@ class Sender extends Abstract {
   }
 
   /**
-     * Gets the n operation of thwe sender.
-     *
-     * @returns {Number}
-     */
+   * Gets the n operation of thwe sender.
+   *
+   * @returns {Number}
+   */
   get nOperation() {
     return this[P_N_OPERATION];
   }
 
   /**
-     * Gets the account of the sender.
-     *
-     * @returns {AccountNumber}
-     */
+   * Gets the account of the sender.
+   *
+   * @returns {AccountNumber}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the amount.
-     *
-     * @returns {Currency}
-     */
+   * Gets the amount.
+   *
+   * @returns {Currency}
+   */
   get amount() {
     return this[P_AMOUNT];
   }
 
   /**
-     * Gets the payload.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the payload.
+   *
+   * @returns {ByteCollection}
+   */
   get payload() {
     return this[P_PAYLOAD];
   }

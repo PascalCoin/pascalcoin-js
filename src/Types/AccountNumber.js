@@ -8,18 +8,19 @@
 const P_ACCOUNT = Symbol('account');
 const P_CHECKSUM = Symbol('checksum');
 const P_CREATED_IN_BLOCK = Symbol('created_in_block');
+const P_IS_FOUNDATION_REWARD = Symbol('is_foundation_reward');
 
 /**
  * A simple type that holds an account number in a reliable way.
  */
 class AccountNumber {
   /**
-     * Creates a new AccountNumber instance, either from an account string
-     * without checksum (which can be a number), an account string with checksum
-     * or another account instance.
-     *
-     * @param {String|Number|AccountNumber|Account} account
-     */
+   * Creates a new AccountNumber instance, either from an account string
+   * without checksum (which can be a number), an account string with checksum
+   * or another account instance.
+   *
+   * @param {String|Number|AccountNumber|Account} account
+   */
   constructor(account) {
     if (account instanceof AccountNumber) {
       this[P_ACCOUNT] = account[P_ACCOUNT];
@@ -48,22 +49,23 @@ class AccountNumber {
     }
 
     this[P_CREATED_IN_BLOCK] = Math.floor(this[P_ACCOUNT] / 5);
+    this[P_IS_FOUNDATION_REWARD] = this[P_CREATED_IN_BLOCK] >= 210000 && this[P_ACCOUNT] % 5 === 4;
   }
 
   /**
-     * Gets the account number.
-     *
-     * @returns {Number}
-     */
+   * Gets the account number.
+   *
+   * @returns {Number}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the checksum of the account.
-     *
-     * @returns {Number}
-     */
+   * Gets the checksum of the account.
+   *
+   * @returns {Number}
+   */
   get checksum() {
     return this[P_CHECKSUM];
   }
@@ -78,31 +80,40 @@ class AccountNumber {
   }
 
   /**
-     * Gets the account string.
-     *
-     * @returns {string}
-     */
+   * Gets a value indicating whether the foundation got this account initially.
+   *
+   * @returns {Boolean}
+   */
+  get isFoundationReward() {
+    return this[P_IS_FOUNDATION_REWARD];
+  }
+
+  /**
+   * Gets the account string.
+   *
+   * @returns {string}
+   */
   toString() {
     return `${this.account}-${this.checksum}`;
   }
 
   /**
-     * Gets a value indicating whether the given account equals the current
-     * account.
-     *
-     * @param {AccountNumber|String|Number} accountNumber
-     * @returns {boolean}
-     */
+   * Gets a value indicating whether the given account equals the current
+   * account.
+   *
+   * @param {AccountNumber|String|Number} accountNumber
+   * @returns {boolean}
+   */
   equals(accountNumber) {
     return (accountNumber !== null && this.toString() === accountNumber.toString());
   }
 
   /**
-     * Calculates the checksum for the given account number.
-     *
-     * @param {Number} account
-     * @returns {Number}
-     */
+   * Calculates the checksum for the given account number.
+   *
+   * @param {Number} account
+   * @returns {Number}
+   */
   static calculateChecksum(account) {
     return ((account * 101) % 89) + 10;
   }

@@ -19,10 +19,10 @@ const P_PAYLOAD = Symbol('payload');
  */
 class Receiver extends Abstract {
   /**
-     * Creates a new instance of the Receiver class.
-     *
-     * @param {Object} data
-     */
+   * Creates a new instance of the Receiver class.
+   *
+   * @param {Object} data
+   */
   constructor(data) {
     super(data);
 
@@ -32,28 +32,28 @@ class Receiver extends Abstract {
   }
 
   /**
-     * Gets the account of the receiver.
-     *
-     * @returns {AccountNumber}
-     */
+   * Gets the account of the receiver.
+   *
+   * @returns {AccountNumber}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the amount.
-     *
-     * @returns {Currency}
-     */
+   * Gets the amount.
+   *
+   * @returns {Currency}
+   */
   get amount() {
     return this[P_AMOUNT];
   }
 
   /**
-     * Gets the payload.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the payload.
+   *
+   * @returns {ByteCollection}
+   */
   get payload() {
     return this[P_PAYLOAD];
   }

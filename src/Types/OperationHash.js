@@ -18,13 +18,13 @@ const P_MD160 = Symbol('md160');
  */
 class OperationHash {
   /**
-     * Constructor
-     *
-     * @param {Number} block
-     * @param {Number} account
-     * @param {Number} nOperation
-     * @param {ByteCollection} md160
-     */
+   * Constructor
+   *
+   * @param {Number} block
+   * @param {Number} account
+   * @param {Number} nOperation
+   * @param {ByteCollection} md160
+   */
   constructor(block, account, nOperation, md160) {
     this[P_BLOCK] = block;
     this[P_ACCOUNT] = account;
@@ -33,10 +33,10 @@ class OperationHash {
   }
 
   /**
-     * Decodes the given operation hash.
-     *
-     * @param {ByteCollection} opHash
-     */
+   * Decodes the given operation hash.
+   *
+   * @param {ByteCollection} opHash
+   */
   static decode(opHash) {
     const block = opHash.slice(0, 4).switchEndian().toInt();
     const account = new AccountNumber(opHash.slice(4, 8).switchEndian().toInt());
@@ -47,60 +47,60 @@ class OperationHash {
   }
 
   /**
-     * Creates the pascal encoding for an operation hash.
-     *
-     * @returns {ByteCollection}
-     */
+   * Creates the pascal encoding for an operation hash.
+   *
+   * @returns {ByteCollection}
+   */
   encode() {
     return ByteCollection.concat(
-      ByteCollection.fromInt(this[P_BLOCK], 4).switchEndian(),
-      ByteCollection.fromInt(this[P_ACCOUNT].account, 4).switchEndian(),
-      ByteCollection.fromInt(this[P_N_OPERATION], 4).switchEndian(),
-      this[P_MD160],
+        ByteCollection.fromInt(this[P_BLOCK], 4).switchEndian(),
+        ByteCollection.fromInt(this[P_ACCOUNT].account, 4).switchEndian(),
+        ByteCollection.fromInt(this[P_N_OPERATION], 4).switchEndian(),
+        this[P_MD160],
     );
   }
 
   /**
-     * Gets the operation hash as a pending operation.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the operation hash as a pending operation.
+   *
+   * @returns {ByteCollection}
+   */
   encodeAsPending() {
     return new OperationHash(0, this[P_ACCOUNT], this[P_N_OPERATION], this[P_MD160]).encode();
   }
 
   /**
-     * Gets the account that executed the operation.
-     *
-     * @returns {AccountNumber}
-     */
+   * Gets the account that executed the operation.
+   *
+   * @returns {AccountNumber}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the block number.
-     *
-     * @returns {Number}
-     */
+   * Gets the block number.
+   *
+   * @returns {Number}
+   */
   get block() {
     return this[P_BLOCK];
   }
 
   /**
-     * Gets the number of operations for the executing account.
-     *
-     * @returns {Number}
-     */
+   * Gets the number of operations for the executing account.
+   *
+   * @returns {Number}
+   */
   get nOperation() {
     return this[P_N_OPERATION];
   }
 
   /**
-     * Gets the md160 of the op.
-     *
-     * @returns {ByteCollection}
-     */
+   * Gets the md160 of the op.
+   *
+   * @returns {ByteCollection}
+   */
   get md160() {
     return this[P_MD160];
   }

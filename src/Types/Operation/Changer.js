@@ -26,19 +26,19 @@ const P_FEE = Symbol('fee');
  */
 class Changer extends Abstract {
   /**
-     * Creates a new instance of the Changer class.
-     *
-     * @param {Object} data
-     */
+   * Creates a new instance of the Changer class.
+   *
+   * @param {Object} data
+   */
   constructor(data) {
     super(data);
 
     this[P_ACCOUNT] = new AccountNumber(data.account);
-    this[P_N_OPERATION] = parseInt(data.nOperation, 10);
+    this[P_N_OPERATION] = parseInt(data.n_operation, 10);
 
     this[P_NEW_ENC_PUBKEY] = null;
-    if (data.newPublicKey !== undefined) {
-      this[P_NEW_ENC_PUBKEY] = PublicKey.decode(ByteCollection.fromHex(data.newPublicKey));
+    if (data.new_enc_pubkey !== undefined) {
+      this[P_NEW_ENC_PUBKEY] = PublicKey.decode(ByteCollection.fromHex(data.new_enc_pubkey));
     }
 
     this[P_NEW_NAME] = null;
@@ -52,8 +52,8 @@ class Changer extends Abstract {
     }
 
     this[P_SELLER_ACCOUNT] = null;
-    if (data.sellerAccount !== undefined) {
-      this[P_SELLER_ACCOUNT] = data.sellerAccount;
+    if (data.seller_account !== undefined) {
+      this[P_SELLER_ACCOUNT] = new AccountNumber(data.seller_account);
     }
 
     this[P_ACCOUNT_PRICE] = null;
@@ -62,93 +62,93 @@ class Changer extends Abstract {
     }
 
     this[P_LOCKED_UNTIL_BLOCK] = null;
-    if (data.lockedUntilBlock !== undefined) {
-      this[P_LOCKED_UNTIL_BLOCK] = parseInt(data.lockedUntilBlock, 10);
+    if (data.locked_until_block !== undefined) {
+      this[P_LOCKED_UNTIL_BLOCK] = parseInt(data.locked_until_block, 10);
     }
 
-    this[P_FEE] = null;
+    this[P_FEE] = new Currency(0);
     if (data.fee !== undefined) {
       this[P_FEE] = new Currency(data.fee);
     }
   }
 
   /**
-     * Gets the changed account.
-     *
-     * @returns {AccountNumber}
-     */
+   * Gets the changed account.
+   *
+   * @returns {AccountNumber}
+   */
   get account() {
     return this[P_ACCOUNT];
   }
 
   /**
-     * Gets the n op of the account.
-     *
-     * @returns {Number}
-     */
+   * Gets the n op of the account.
+   *
+   * @returns {Number}
+   */
   get nOperation() {
     return this[P_N_OPERATION];
   }
 
   /**
-     * Gets the new public key.
-     *
-     * @returns {PublicKey|null}
-     */
+   * Gets the new public key.
+   *
+   * @returns {PublicKey|null}
+   */
   get newPublicKey() {
     return this[P_NEW_ENC_PUBKEY];
   }
 
   /**
-     * Gets the new name.
-     *
-     * @returns {String|null}
-     */
+   * Gets the new name.
+   *
+   * @returns {String|null}
+   */
   get newName() {
     return this[P_NEW_NAME];
   }
 
   /**
-     * Gets the new type.
-     *
-     * @returns {Number|null}
-     */
+   * Gets the new type.
+   *
+   * @returns {Number|null}
+   */
   get newType() {
     return this[P_NEW_TYPE];
   }
 
   /**
-     * Gets the seller account.
-     *
-     * @returns {AccountNumber|null}
-     */
+   * Gets the seller account.
+   *
+   * @returns {AccountNumber|null}
+   */
   get sellerAccount() {
     return this[P_SELLER_ACCOUNT];
   }
 
   /**
-     * Gets the sales price of the account.
-     *
-     * @returns {Currency|null}
-     */
+   * Gets the sales price of the account.
+   *
+   * @returns {Currency|null}
+   */
   get accountPrice() {
     return this[P_ACCOUNT_PRICE];
   }
 
   /**
-     * Gets the block number until the account is blocked.
-     *
-     * @returns {Number|null}
-     */
+   * Gets the block number until the account is blocked.
+   *
+   * @returns {Number|null}
+   */
   get lockedUntilBlock() {
     return this[P_LOCKED_UNTIL_BLOCK];
   }
 
   /**
-     * Gets the fee for the change operation.
-     *
-     * @returns {Currency|null}
-     */
+   * Gets the fee for the change operation.
+   *
+   * @returns {Currency|null}
+   */
   get fee() {
     return this[P_FEE];
   }
